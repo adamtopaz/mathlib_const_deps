@@ -1,0 +1,16 @@
+name = "mathlib_const_deps"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["MathlibConstDeps"]
+reservoire = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.29.0-rc8"
+
+[[require]]
+name = "lean_scout"
+git = "https://github.com/mathlib-initiative/lean_scout"
+rev = "v4.29.0-rc8"
+
