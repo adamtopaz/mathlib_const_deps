@@ -1,0 +1,89 @@
+name: scout-action
+description: Run lean_scout in a Lean project and publish the extracted dataset to Hugging Face.
+inputs:
+  hf_repo_id:
+    description: Hugging Face dataset repo id, e.g. my-org/my-dataset
+    required: true
+  hf_token:
+    description: Hugging Face write token. Optional only when dry_run is true.
+    required: false
+    default: ""
+  command:
+    description: lean_scout extractor command, e.g. types, const_dep, tactics
+    required: true
+  target_kind:
+    description: 'Extraction target kind: imports, library, or read'
+    required: true
+  target_values:
+    description: Newline-separated target values consumed by the selected target kind
+    required: true
+  project_root:
+    description: Path to the Lean project root, relative to the caller workspace
+    required: false
+    default: "."
+  parallel:
+    description: Value passed to --parallel
+    required: false
+    default: "1"
+  num_shards:
+    description: Value passed to --numShards
+    required: false
+    default: "128"
+  batch_rows:
+    description: Value passed to --batchRows
+    required: false
+    default: "1024"
+  config_json:
+    description: JSON passed to lean_scout --config
+    required: false
+    default: "{}"
+  private:
+    description: Pass --private to hf upload if true
+    required: false
+    default: "false"
+  commit_message:
+    description: Commit message for the Hugging Face upload
+    required: false
+    default: ""
+  dry_run:
+    description: If true, skip Hugging Face upload after extraction
+    required: false
+    default: "false"
+outputs:
+  data_dir:
+    description: Temporary directory containing parquet files and README.md
+    value: ${{ steps.run.outputs.data_dir }}
+  parquet_count:
+    description: Number of parquet shards generated
+    value: ${{ steps.run.outputs.parquet_count }}
+  dataset_url:
+    description: URL of the target Hugging Face dataset repo
+    value: ${{ steps.run.outputs.dataset_url }}
+  readme_path:
+    description: Path to the generated README.md
+    value: ${{ steps.run.outputs.readme_path }}
+  scout_command:
+    description: Fully rendered lake run scout command
+    value: ${{ steps.run.outputs.scout_command }}
+runs:
+  using: composite
+  steps:
+    - name: Run scout-action
+      id: run
+      shell: bash
+      env:
+        PYTHONPATH: ${{ github.action_path }}/src
+        SCOUT_ACTION_HF_REPO_ID: ${{ inputs.hf_repo_id }}
+        SCOUT_ACTION_HF_TOKEN: ${{ inputs.hf_token }}
+        SCOUT_ACTION_COMMAND: ${{ inputs.command }}
+        SCOUT_ACTION_TARGET_KIND: ${{ inputs.target_kind }}
+        SCOUT_ACTION_TARGET_VALUES: ${{ inputs.target_values }}
+        SCOUT_ACTION_PROJECT_ROOT: ${{ inputs.project_root }}
+        SCOUT_ACTION_PARALLEL: ${{ inputs.parallel }}
+        SCOUT_ACTION_NUM_SHARDS: ${{ inputs.num_shards }}
+        SCOUT_ACTION_BATCH_ROWS: ${{ inputs.batch_rows }}
+        SCOUT_ACTION_CONFIG_JSON: ${{ inputs.config_json }}
+        SCOUT_ACTION_PRIVATE: ${{ inputs.private }}
+        SCOUT_ACTION_COMMIT_MESSAGE: ${{ inputs.commit_message }}
+        SCOUT_ACTION_DRY_RUN: ${{ inputs.dry_run }}
+      run: python3 "${{ github.action_path }}/scripts/run_action.py"
