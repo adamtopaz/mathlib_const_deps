@@ -32,7 +32,7 @@ from the GitHub repository `{{ source_repo }}` at commit `{{ source_sha }}`.
 {% if ns.mathlib and ns.mathlib.get('rev') %}- Mathlib commit used for extraction: `{{ ns.mathlib.get('rev') }}`{% if ns.mathlib.get('inputRev') %} (requested as `{{ ns.mathlib.get('inputRev') }}`){% endif %}
 {% endif %}
 
-> If you use this dataset, please reference the corresponding `mathlib` / `mathlib4` revision used for extraction.
+If you use this dataset, please reference the corresponding `mathlib` / `mathlib4` revision used for extraction.
 
 ## Extraction details
 
@@ -69,3 +69,10 @@ Schema lookup was unavailable for this command.
 
 Reason: `{{ schema_error }}`
 {% endif %}
+
+## Attribution
+
+This dataset is derived from [Mathlib](https://github.com/leanprover-community/mathlib4), an open-source mathematical library developed by the [leanprover-community](https://leanprover-community.github.io/). 
+If you use this dataset, please cite the [Mathlib paper](https://doi.org/10.1145/3372885.3373824) or the [Mathlib repository](https://github.com/leanprover-community/mathlib4).
+
+A full list of Mathlib contributors is available at [this link](https://github.com/leanprover-community/mathlib4/graphs/contributors).
