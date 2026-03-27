@@ -27,7 +27,7 @@ jobs:
 
       - name: Dry-run const_dep dataset publish
         id: scout
-        uses: mathlib-initiative/scout-action@v1
+        uses: mathlib-initiative/scout-action@320bde4d67978a52c4ad753a8dc7fb76e3ba2961
         with:
           hf_repo_id: ${{ env.HF_DATASET_REPO }}
           command: const_dep
