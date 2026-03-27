@@ -1,1 +1,0 @@
-"""scout-action package."""
