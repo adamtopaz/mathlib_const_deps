@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-  HF_DATASET_REPO: mathlib-initiative/mathlib_const_deps
+  HF_DATASET_REPO: adamtopaz/mathlib_const_deps
 
 jobs:
   build:
