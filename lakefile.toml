@@ -1,7 +1,6 @@
 name = "mathlib_const_deps"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["MathlibConstDeps"]
 reservoire = false
 
 [[require]]
