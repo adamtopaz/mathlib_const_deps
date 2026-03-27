@@ -1,0 +1,71 @@
+---
+pretty_name: {{ title }}
+license: apache-2.0
+tags:
+  - lean4
+  - theorem-proving
+  - lean-scout
+  - mathlib
+---
+
+# {{ title }}
+
+This dataset was generated with [lean_scout](https://github.com/mathlib-initiative/lean_scout)
+from the GitHub repository `{{ source_repo }}` at commit `{{ source_sha }}`.
+
+{%- set ns = namespace(mathlib=none) -%}
+{%- if lake_manifest -%}
+{%- for package in lake_manifest.get('packages', []) -%}
+{%- if package.get('name') == "mathlib" -%}
+{%- set ns.mathlib = package -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endif %}
+
+## Source
+
+- Source repository: `{{ source_repo }}`
+- Source commit: `{{ source_sha }}`
+- Hugging Face dataset repo: `{{ hf_repo_id }}`
+- Dataset URL: `{{ dataset_url }}`
+- Generated at (UTC): `{{ generated_at }}`
+{% if ns.mathlib and ns.mathlib.get('rev') %}- Mathlib commit used for extraction: `{{ ns.mathlib.get('rev') }}`{% if ns.mathlib.get('inputRev') %} (requested as `{{ ns.mathlib.get('inputRev') }}`){% endif %}
+{% endif %}
+
+> If you use this dataset, please reference the corresponding `mathlib` / `mathlib4` revision used for extraction.
+
+## Extraction details
+
+- Extractor command: `{{ command }}`
+- Target kind: `{{ target_kind }}`
+- Parquet shards: `{{ parquet_count }}`
+- Dry run: `{{ dry_run }}`
+
+### Target values
+
+{% for value in target_values %}- `{{ value }}`
+{% endfor %}
+
+### Extractor config
+
+```json
+{{ config | json }}
+```
+
+### Scout command
+
+```bash
+{{ scout_command }}
+```
+
+## Schema
+
+{% if schema_available %}
+```yaml
+{{ schema | yaml }}
+```
+{% else %}
+Schema lookup was unavailable for this command.
+
+Reason: `{{ schema_error }}`
+{% endif %}

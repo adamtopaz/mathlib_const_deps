@@ -27,7 +27,7 @@ jobs:
 
       - name: Publish const_dep dataset
         id: scout
-        uses: mathlib-initiative/scout-action@320bde4d67978a52c4ad753a8dc7fb76e3ba2961
+        uses: mathlib-initiative/scout-action@035bf2b3e772d060de765583f9c0d311b797b524
         with:
           hf_repo_id: ${{ env.HF_DATASET_REPO }}
           hf_token: ${{ secrets.HF_TOKEN }}
@@ -35,6 +35,7 @@ jobs:
           target_kind: imports
           target_values: |
             Mathlib
+          readme_template: .github/datasets/const_dep.README.md.j2
           dry_run: ${{ github.event_name == 'pull_request' || github.ref != 'refs/heads/main' }}
 
       - name: Show scout-action outputs
