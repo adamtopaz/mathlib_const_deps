@@ -25,16 +25,17 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Dry-run const_dep dataset publish
+      - name: Publish const_dep dataset
         id: scout
         uses: mathlib-initiative/scout-action@320bde4d67978a52c4ad753a8dc7fb76e3ba2961
         with:
           hf_repo_id: ${{ env.HF_DATASET_REPO }}
+          hf_token: ${{ secrets.HT_TOKEN }}
           command: const_dep
           target_kind: imports
           target_values: |
             Mathlib
-          dry_run: true
+          dry_run: ${{ github.event_name == 'pull_request' || github.ref != 'refs/heads/main' }}
 
       - name: Show scout-action outputs
         run: |
