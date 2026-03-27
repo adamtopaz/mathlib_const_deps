@@ -30,7 +30,7 @@ jobs:
         uses: mathlib-initiative/scout-action@320bde4d67978a52c4ad753a8dc7fb76e3ba2961
         with:
           hf_repo_id: ${{ env.HF_DATASET_REPO }}
-          hf_token: ${{ secrets.HT_TOKEN }}
+          hf_token: ${{ secrets.HF_TOKEN }}
           command: const_dep
           target_kind: imports
           target_values: |
